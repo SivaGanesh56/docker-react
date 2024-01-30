@@ -2,8 +2,8 @@ version: 0.2
 
 env:
   variables:
-    AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
-    AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+    AWS_ACCESS_KEY_ID: AKIAQ4BL7HTIAZXWCVP6
+    AWS_SECRET_ACCESS_KEY: 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
     AWS_DEFAULT_REGION: eu-north-1
 
 phases:
@@ -11,11 +11,7 @@ phases:
     commands:
       - echo $AWS_ACCESS_KEY_ID
       - echo Logging in to Amazon ECR...
-      - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-      - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-      - aws configure set region $AWS_DEFAULT_REGION
-      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login -u AWS --password-stdin 060221766864.dkr.ecr.eu-north-1.amazonaws.com
-      - REPOSITORY_URI=060221766864.dkr.ecr.eu-north-1.amazonaws.com/next-docker
+      - aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 060221766864.dkr.ecr.eu-north-1.amazonaws.com
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
 
@@ -23,15 +19,14 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build -t $REPOSITORY_URI:latest .
-      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+      - docker build -t next-docker .
+      - docker tag next-docker:latest 060221766864.dkr.ecr.eu-north-1.amazonaws.com/next-docker:latest
 
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker images...
-      - docker push $REPOSITORY_URI:latest
-      - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - docker push 060221766864.dkr.ecr.eu-north-1.amazonaws.com/next-docker:latest
       - echo Writing image definitions file...
       # - printf '[{"name":"__ECS_CONTAINER_NAME__","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
 
