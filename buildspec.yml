@@ -1,8 +1,4 @@
 version: 0.2
-phases:
-  install:
-    runtime-versions:
-      docker: 18
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
@@ -27,3 +23,6 @@ phases:
       # - printf '[{"name”:"__ECS_CONTAINER_NAME__","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
 artifacts:
   files: imagedefinitions.json
+
+
+# aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 060221766864.dkr.ecr.eu-north-1.amazonaws.com
