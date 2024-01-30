@@ -25,4 +25,3 @@ artifacts:
   files: imagedefinitions.json
 
 
-# aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 060221766864.dkr.ecr.eu-north-1.amazonaws.com
