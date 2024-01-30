@@ -1,0 +1,40 @@
+.infrastructure-flow-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.step-number {
+  font-size: 24px;
+  font-weight: bold;
+  margin-right: 15px;
+}
+
+.step-details {
+  flex: 1;
+}
+
+.step-details h2 {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.step-details p {
+  margin-bottom: 10px;
+}
+
+.step-details a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.arrow {
+  margin-top: 10px;
+}
