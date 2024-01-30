@@ -1,0 +1,19 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+
+  pre_build:
+    commands:
+      - npm install
+
+  build:
+    commands:
+      - printenv
+      - npm run build
+
+  post_build:
+    commands:
+      - npm run deploy
