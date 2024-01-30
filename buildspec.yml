@@ -1,4 +1,6 @@
 version: 0.2
+
+phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
@@ -23,5 +25,3 @@ version: 0.2
       # - printf '[{"name”:"__ECS_CONTAINER_NAME__","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
 artifacts:
   files: imagedefinitions.json
-
-
