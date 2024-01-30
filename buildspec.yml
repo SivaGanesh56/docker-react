@@ -1,19 +1,29 @@
 version: 0.2
-
 phases:
   install:
     runtime-versions:
-      nodejs: 18
-
+      docker: 18
   pre_build:
     commands:
-      - npm install
-
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - $(aws ecr get-login --region eu-north-1 --no-include-email)
+      - REPOSITORY_URI=060221766864.dkr.ecr.eu-north-1.amazonaws.com/next-docker
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=${COMMIT_HASH:=latest}
   build:
     commands:
-      - printenv
-      - npm run build
-
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - docker build -t $REPOSITORY_URI:latest .
+      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
   post_build:
     commands:
-      - npm run deploy
+      - echo Build completed on `date`
+      - echo Pushing the Docker images...
+      - docker push $REPOSITORY_URI:latest
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - echo Writing image definitions file...
+      # - printf '[{"name”:"__ECS_CONTAINER_NAME__","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+artifacts:
+  files: imagedefinitions.json
