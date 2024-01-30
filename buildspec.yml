@@ -29,6 +29,3 @@ phases:
       - docker push 060221766864.dkr.ecr.eu-north-1.amazonaws.com/next-docker:latest
       - echo Writing image definitions file...
       # - printf '[{"name":"__ECS_CONTAINER_NAME__","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
-
-artifacts:
-  files: imagedefinitions.json
