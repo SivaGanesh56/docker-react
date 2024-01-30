@@ -2,8 +2,6 @@ version: 0.2
 
 env:
   variables:
-    AWS_ACCESS_KEY_ID: AKIAQ4BL7HTIAZXWCVP6
-    AWS_SECRET_ACCESS_KEY: 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
     AWS_DEFAULT_REGION: eu-north-1
 
 phases:
@@ -27,5 +25,3 @@ phases:
       - echo Build completed on `date`
       - echo Pushing the Docker images...
       - docker push 060221766864.dkr.ecr.eu-north-1.amazonaws.com/next-docker:latest
-      - echo Writing image definitions file...
-      # - printf '[{"name":"__ECS_CONTAINER_NAME__","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
